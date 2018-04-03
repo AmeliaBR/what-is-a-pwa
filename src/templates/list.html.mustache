@@ -1,0 +1,25 @@
+{{!
+
+Data: 
+text - description/introductory phrase (HTML markup)
+list - (required) a list of HTML markup strings
+ordered - true if this should be an ordered list
+index - slide number
+class - added CSS class(es)
+
+}}
+<div class="slide {{class}}" {{#index}}
+     data-slide-index="{{.}}"{{/index}}>
+    {{#text}}
+    <p>
+        {{{.}}}
+    </p>
+    {{/text}}
+    {{#ordered}}<ol>{{/ordered}}
+    {{^ordered}}<ul>{{/ordered}}
+    {{#list}}
+        <li>{{{.}}}</li>
+    {{/list}}
+    {{^ordered}}</ul>{{/ordered}}
+    {{#ordered}}</ol>{{/ordered}}
+</div>

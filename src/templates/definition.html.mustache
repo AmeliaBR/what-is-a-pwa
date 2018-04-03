@@ -1,0 +1,16 @@
+{{!
+
+Data: 
+term - (required) the term being defined (markup)
+text - (required) body of the definition (HTML markup for inside a paragraph)
+index - slide number
+class - added CSS class(es)
+
+}}
+<div class="slide {{class}}" {{#index}}
+     data-slide-index="{{.}}"{{/index}}>
+    <dfn>{{{term}}}</dfn>
+    <p>
+        {{{text}}}
+    </p>
+</div>

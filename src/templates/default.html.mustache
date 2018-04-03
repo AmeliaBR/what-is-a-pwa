@@ -1,0 +1,14 @@
+{{!
+
+Data: 
+text -  (required) slide content (HTML markup for inside a paragraph)
+index - slide number
+class - added CSS class(es)
+
+}}
+<div class="slide {{class}}" {{#index}}
+     data-slide-index="{{.}}"{{/index}}>
+    <p>
+        {{{text}}}
+    </p>
+</div>

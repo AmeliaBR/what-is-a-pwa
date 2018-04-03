@@ -1,12 +1,17 @@
 const slideDataFile = "./slides.yaml";
 //const siteDataFile = "./site.yaml";
+const templateFolder = "./templates/";
+const defaultTemplate = "default";
+const templateSuffix = ".html.mustache";
 
 const path = require("path");
 const fs = require("fs");
 const yaml = require("yaml-parser");
+const mustache = require("mustache");
 
 module.exports = function(src, destination, options={}) {
     let slideDataArray = [];
+    let fetchTemplates = templateParser(path.resolve(src, templateFolder));
     let siteData = {}; //yaml.safeLoad(siteDataFile);
 
 
@@ -17,19 +22,60 @@ module.exports = function(src, destination, options={}) {
     );
     slideDataArray.forEach( slugAndTitleGenerator(options.slugStyle) );
 
-    slideDataArray.forEach( (d)=> {
-        let dirPath = path.join(destination, d.slug)
-        fs.mkdir(dirPath, (err)=> {
-            if (err && (err.code != 'EEXIST')) {
+    slideDataArray.forEach( (d, i)=> {
+        d.index = i+1;
+        let dirPath = path.join(destination, d.slug);
+        fetchTemplates(d.template||defaultTemplate)
+            .then((template)=> {
+                let rendered = mustache.render(template, d);
+                return rendered;
+            })
+            .then((rendered)=> {
+                if (!fs.existsSync(dirPath)) {
+                    fs.mkdirSync(dirPath);
+                }
+                return rendered;
+            })
+            .then( (rendered)=> {
+                let filePath = path.join(dirPath, "content.html");
+                fs.writeFileSync(filePath, rendered);
+                return rendered;
+            })
+            .then( (rendered)=> {
+                let filePath = path.join(dirPath, "index.html");
+                let data = {
+                    page: d,
+                    site: siteData,
+                    content: rendered
+                }
+                fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+                return true;
+            })
+            .catch( (err)=> {
                 console.error(err);
-                return;
-            }
-            let filePath = path.join(dirPath, "index.html");
-            fs.writeFile(filePath, JSON.stringify(d, null, 2),
-                        (err)=>{if (err) console.error(err)});
-        });
+            });
     });
     
+}
+
+function templateParser(templateFolder) {
+    let templates = new Map();
+
+    return function(name) {
+        return new Promise((resolve, reject)=>{
+            try {
+                let template = templates.get(name);
+                if (!template) {
+                    let filename = path.resolve(templateFolder, (name + templateSuffix));
+                    template = fs.readFileSync(filename, 'utf8');
+                    templates.set(name, template); // save for re-use
+                    mustache.parse( template ); // mustache stores the parsed object internally
+                }
+                resolve( template );
+            }
+            catch(err){ reject(err); }
+        });
+    }
 }
 
 const defaultSlugWordBreaks = [

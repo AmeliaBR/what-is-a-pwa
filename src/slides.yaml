@@ -138,7 +138,7 @@ text: "Service Worker"
 name: Web workers
 template: definition
 term: "worker (script)"
-text: "script that runs in a separate global <em>scope</em>,
+text: "script that runs in its own global <em>scope</em>,
   separate from the document window"
 ---
 name: Proxy as a service
@@ -164,7 +164,7 @@ list:
   - "multi-tab communication"
 ---
 name: Service worker registration
-template: code-snippets
+template: code-snippet
 text: "Registered with JS on any page:"
 code: 
       lang: JS

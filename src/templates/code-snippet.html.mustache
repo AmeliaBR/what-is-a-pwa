@@ -1,0 +1,22 @@
+{{!
+
+Data: 
+text - description of the code (HTML markup)
+code - (required) an object or list of objects of the form {code, lang}, or a string
+     - the code will be escaped, NOT treated as markup
+     - the lang will be set as a class
+index - slide number
+class - added CSS class(es)
+
+}}
+<div class="slide {{class}}" {{#index}}
+     data-slide-index="{{.}}"{{/index}}>
+    {{#text}}
+    <p>
+        {{{.}}}
+    </p>
+    {{/text}}
+    {{#code}}
+    <pre {{#lang}}class="{{.}}"{{/lang}}><code>{{code}}</code></pre>
+    {{/code}}
+</div>
