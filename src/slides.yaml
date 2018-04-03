@@ -1,0 +1,187 @@
+# Content of the slide deck, as a series of YAML documents
+# Each slide can have the following properties
+# name     - title for the slide page
+#          - used to generate the folder name for the URL
+# text     - HTML markup for the main content block in the template
+#            (quoted string recommended, to avoid punctuation confusion)
+# template - name of the slide markup template, if not default
+# css      - custom styles for just this slide (as content of <style>)
+#            must be quoted string, to avoid : being interpretted as YAML
+# class    - CSS classes to add to the slide element
+# ...other values according to the template
+---
+name: Introduction
+template: title-card
+title-level: 1
+text: "What the
+  <span role='img' aria-label='H-E-double-hockey-sticks'>HE🏒🏒</span>
+  is a PWA?"
+---
+name: P.W.A.
+text: "<b>P</b>rogressive
+  <b>W</b>eb
+  <b>A</b>pplication"
+---
+name: It's a website
+text: "A <strong>website</strong>
+  that has been <em>progressively enhanced</em>
+  so it acts like an <strong>app</strong>"
+---
+name: Zingy new brandname
+template: quote
+text: "PWAs are just a bunch of technologies with a zingy-new brandname
+  that keeps the open web going a bit longer"
+citation: 
+  source: "Frances Berriman"
+  link: 'https://fberriman.com/2017/06/26/naming-progressive-web-apps/'
+---
+name: The name isn't for you
+template: quote
+text: "<em>The name isn’t for you</em>…
+  The name is for your boss, for your investor, for your marketeer."
+citation: 
+  source: "Frances Berriman"
+  link: 'https://fberriman.com/2017/06/26/naming-progressive-web-apps/'
+---
+name: But really…
+template: title-card
+title-level: 2
+text: "But really…
+  <strong>What is a PWA?</strong>"
+---
+name: Website plus
+template: title-card
+title-level: 3
+text: "A progressive website
+  <b>+</b> installation metadata
+  <b>+</b> offline support"
+---
+name: Basic or better
+template: definition
+term: "progressive"
+text: "Basic functionality in basic browsers.<br/>
+  Better functionality in better browsers."
+---
+name: Progressive means responsive
+text: "<em>progressive</em> also means <strong>responsive</strong>"
+---
+name: It's still a website
+template: definition
+term: "website"
+text: "<em>discoverable</em>, <em>linkable</em>, <strong>OS-independent</strong>"
+---
+name: HTTPS required
+text: "Also <em>secure</em>: HTTPS is <strong>required</strong>"
+---
+name: Installation metadata
+template: definition
+term: "installation metadata"
+text: "A web <em>manifest</em> (JSON) file defines the <em>app-y</em> bits"
+---
+name: Offline support
+template: definition
+term: "offline support"
+text: "A <em>service worker</em> (JS) file provides offline support."
+---
+name: The manifest
+template: title-card
+level: 3
+text: "The Web Manifest"
+---
+name: Manifest link
+template: code-snippet
+text: "Linked from every page"
+code: 
+  - lang: HTML
+    code: '<link rel="manifest" href="/manifest.webmanifest" />'
+  - lang: HTML
+    code: '<link rel="manifest" href="/manifest.json" />'
+  - lang: HTML
+    code: '<link rel="manifest" href="/manifest-en.json" />'
+---
+name: Manifest requirements
+template: list
+text: "Manifest <em>should</em> have:"
+list:
+  - "<code>start_url</code>"
+  - "<code>name</code> and <code>short_name</code>"
+  - "<code>display</code>"
+  - "icons (at least one)"
+---
+---
+name: Manifest options
+template: list
+text: "Other options:"
+list:
+  - "<code>scope</code>"
+  - "<code>dir</code> and <code>lang</code>"
+  - "more icons and theme colors"
+  - "screenshots, categories, and ratings for app stores"
+  - "<code>orientation</code>"
+  - "alternative apps"
+  - "<code>serviceworker</code>"
+---
+name: installation support
+template: list
+text: "Installable in"
+list: 
+  - "Android browsers (Chrome, Firefox, etc.)"
+  - "Safari 11.1 (brand new)"
+  - "MS Edge 17 / Windows Store (in preview)"
+  - "Soon: Other browsers on Windows & iOS"
+---
+name: The service worker
+template: title-card
+level: 3
+text: "Service Worker"
+---
+name: Web workers
+template: definition
+term: "worker (script)"
+text: "script that runs in a separate global <em>scope</em>,
+  separate from the document window"
+---
+name: Proxy as a service
+text: "The <em>Service</em> worker acts as a <em>proxy</em> for website fetches"
+---
+name: Custom cache
+text: "A service worker controls a <em>cache</em> of HTTP requests &amp; responses"
+---
+name: Only one
+text: "There can be only <strong>one</strong>"
+---
+name: Simple offline support
+text: "<strong>Minimum Viable Service Worker:</strong> custom error pages"
+---
+name: Possible service workers
+template: list
+text: "Maximal Service Workers:"
+list: 
+  - "standalone games/apps"
+  - "save for offline"
+  - "asset manipulation"
+  - "generated HTML"
+  - "multi-tab communication"
+---
+name: Service worker registration
+template: code-snippets
+text: "Registered with JS on any page:"
+code: 
+      lang: JS
+      code: 'if (navigator.serviceWorker) {
+        
+                navigator.serviceWorker.register("/sw.js")
+              
+            }'
+---
+name: The demo
+template: title-card
+level: 2
+text: "A demo"
+---
+name: This is the demo
+text: "You're looking at it"
+---
+
+
+
