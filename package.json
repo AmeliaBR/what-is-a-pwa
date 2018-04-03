@@ -1,0 +1,26 @@
+{
+  "name": "what-is-a-pwa",
+  "version": "1.0.0",
+  "description": "Slides for an introduction to Progressive Web Apps (PWA), which are themselves a PWA demo",
+  "main": "build.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmeliaBR/what-is-a-pwa.git"
+  },
+  "author": "Amelia Bellamy-Royds",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/AmeliaBR/what-is-a-pwa/issues"
+  },
+  "homepage": "https://github.com/AmeliaBR/what-is-a-pwa#readme",
+  "dependencies": {
+    "mustache": "^2.3.0",
+    "yaml-parser": "^3.5.3"
+  }
+}
