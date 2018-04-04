@@ -5,10 +5,14 @@ text - (required) body of the quote (HTML markup)
 citation - source of the quote, either as a string or a {source, link} object
 index - slide number
 class - added CSS class(es)
+css - added custom CSS
 
 }}
-<div class="slide {{class}}" {{#index}}
+<div class="slide quote {{class}}" {{#index}}
      data-slide-index="{{.}}"{{/index}}>
+    {{#css}}<style>
+{{{.}}}
+    </style>{{/css}}
     <blockquote>
         {{{text}}}
         {{#citation}}<cite>

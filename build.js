@@ -5,8 +5,9 @@ const buildFolder = path.resolve("./docs/");
 
 
 // copy static files
+require(path.resolve(srcFolder, "copy-static.js"))(srcFolder, buildFolder);
 
-// build CSS from Sass
+// could add other build steps, e.g. CSS from Sass
 
 // build slides
 

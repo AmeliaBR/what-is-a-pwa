@@ -7,10 +7,14 @@ code - (required) an object or list of objects of the form {code, lang}, or a st
      - the lang will be set as a class
 index - slide number
 class - added CSS class(es)
+css - added custom CSS
 
 }}
-<div class="slide {{class}}" {{#index}}
+<div class="slide code-snippet {{class}}" {{#index}}
      data-slide-index="{{.}}"{{/index}}>
+    {{#css}}<style>
+{{{.}}}
+    </style>{{/css}}
     {{#text}}
     <p>
         {{{.}}}

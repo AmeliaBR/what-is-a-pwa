@@ -6,10 +6,14 @@ list - (required) a list of HTML markup strings
 ordered - true if this should be an ordered list
 index - slide number
 class - added CSS class(es)
+css - added custom CSS
 
 }}
-<div class="slide {{class}}" {{#index}}
+<div class="slide list {{class}}" {{#index}}
      data-slide-index="{{.}}"{{/index}}>
+    {{#css}}<style>
+{{{.}}}
+    </style>{{/css}}
     {{#text}}
     <p>
         {{{.}}}

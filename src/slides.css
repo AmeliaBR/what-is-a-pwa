@@ -1,0 +1,204 @@
+
+
+/*** Page/Slide layout ***/
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background: skyBlue;
+    font-family: sans-serif;
+}
+
+body, main, .slide {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    position: relative;
+
+    height: calc(-6em + 100vh);
+    flex: 1 0 auto;
+
+    color: indigo;
+}
+
+.slide {
+    position: relative;
+    flex-grow: 1;
+    left: -0.2em;
+    margin: 1em;
+
+    border-radius: 1em;
+    padding: 1em;
+
+    font-size: calc(1.5rem + 2vmin);
+
+    background: lightYellow;
+    box-shadow: 0.5em 0.5em 1em 0.1em purple;
+}
+
+/*** Next/Previous Navigation ***/
+
+.slide-link {
+    display: block;
+    position: absolute;
+    min-width: 4em;
+    bottom: -1.5rem;
+    padding: 1rem;
+    z-index: 100;
+    
+    font-size: 200%;
+    text-align: center;
+
+    background: hotPink;
+    
+    transition: opacity 0.2s;
+}
+.slide-link:link, .slide-link:visited {
+    text-decoration: none;
+    color: indigo;
+}
+
+#previous-slide-link {
+    left: 0.5rem;
+}
+
+#next-slide-link {
+    right: 0.5rem;
+}
+
+.slide-link:not(:focus):not(:hover) {
+    opacity: 0.5;
+}
+
+/*** Popup table of contents navigation ***/
+.toggle-menu {
+    height: 4rem;
+}
+.popup-menu {
+    width: 15rem;
+    max-width: calc(100vh - 5rem);
+    max-height: 90vh;
+    overflow: auto;
+
+    padding-right: 0.5rem;
+
+    background: #234;
+    color: white;
+}
+.toggle-control, .toggle-button {
+    display: block !important; /* override inline style */
+}
+.toggle-control:checked ~ .popup-menu,
+.toggle-control:not(:checked) ~ .popup-menu {
+    position: absolute;
+
+    margin: auto;
+    bottom: 4rem;
+    left: 0;
+    right: 0;
+}
+.toggle-control:not(:checked) ~ .popup-menu {
+    visibility:hidden;
+}
+.toggle-control {
+    position: absolute;
+    clip: rect(0,0,0,0);
+}
+.toggle-control:focus ~ .toggle-button {
+    outline: dashed 2px hotPink;
+    outline-offset: -0.5rem;
+}
+.toggle-button {
+    position: absolute;
+    width: 8em;
+    margin: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    padding: 1rem;
+
+    text-align: center;
+
+    background: #234;
+    color: lightSkyBlue;
+    border-color: #468;
+}
+@supports (width: fit-content) {
+    .toggle-button {
+        bottom: 0.2rem;
+        width: fit-content;
+        min-width: 5em;
+    }
+}
+.toggle-button.open {
+    border-style: outset;
+}
+.toggle-button.close {
+    border-style: inset;
+}
+.toggle-control:checked ~ .toggle-button.open {
+    visibility: hidden;
+}
+.toggle-control:not(:checked) ~ .toggle-button.close {
+    visibility: hidden;
+}
+
+.popup-menu li {
+    margin: 0.5em 0;
+}
+.popup-menu a:link {
+    color: deepSkyBlue;
+}
+.popup-menu a:visited, .popup-menu a:not(:link) {
+    color: lightSkyBlue;
+}
+.popup-menu a[aria-current]::before {
+    content: "➣";
+
+    display: inline-block;
+    vertical-align: -0.1em;
+
+    font-size: 150%;
+}
+@supports (transform: scaleX(-1)) {
+    .popup-menu a[aria-current]::before {
+        float: right;
+        margin-top: -0.3em;
+        transform: scaleX(-1);
+    }
+}
+
+
+/*** Slide Contents ***/
+
+blockquote, .slide > p {
+    text-align: center;
+}
+
+blockquote::before, blockquote::after {
+    font-size: 300%;
+}
+
+blockquote::before {
+    content: "❝";
+    float: left;
+}
+
+blockquote::after {
+    content: "❞";
+    float: right;
+}
+
+blockquote cite {
+    display: block;
+    margin-top: 0.5em;
+    text-align: right;
+}
+
+blockquote cite::before {
+    content: "— ";
+}

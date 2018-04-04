@@ -168,11 +168,10 @@ template: code-snippet
 text: "Registered with JS on any page:"
 code: 
       lang: JS
-      code: 'if (navigator.serviceWorker) {
-        
-                navigator.serviceWorker.register("/sw.js")
-              
-            }'
+      code: |-
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register("/sw.js")
+        }
 ---
 name: The demo
 template: title-card
@@ -181,7 +180,49 @@ text: "A demo"
 ---
 name: This is the demo
 text: "You're looking at it"
+css: |-
+  .slide p {
+    animation: pulse 2s infinite alternate;
+  }
+  @keyframes pulse {
+    to { transform: scale(1.1); }
+  }
 ---
+name: Demo links
+template: list
+text: "Follow along:"
+list:
+  - "<a href='https://github.com/AmeliaBR/what-is-a-pwa/'>GitHub repo: AmeliaBR/what-is-a-pwa</a>"
+  - "<a href='https://ameliabr.github.io/what-is-a-pwa/'>Live on GitHub pages</a>" 
+---
+###
+#---
+name: More to explore
+template: title-card
+title-level: 2
+text: "More PWA resources"
+---
+name: PWA Rock
+text: "The <a href='https://pwa.rocks/'>PWA Rocks</a> site compiles demos &amp; real-world sites"
+object:
+  iframe: 'https://pwa.rocks/'
+---
+name: Documentation
+template: list
+text: "References &amp; tutorials:"
+list:
+  - "<a href='https://developer.mozilla.org/en-US/Apps/Progressive'>MDN</a>
+     has great new PWA guides (+ regular docs)"
+  - "<a href='https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/'>developers.google.com/web</a>
+     has tutorials"
+  - "The Service Worker Cookbook, <a href='https://serviceworke.rs/'>serviceworke.rs</a>
+     has copy & paste samples"
+  - "Then, there's the
+     <a href='https://w3c.github.io/ServiceWorker/'>Service Worker</a> and
+     <a href='https://w3c.github.io/manifest/'>Web Manifest</a> specs
+     on w3c.github.io"
+---
+
 
 
 

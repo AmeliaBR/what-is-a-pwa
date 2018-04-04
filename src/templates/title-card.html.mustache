@@ -5,10 +5,14 @@ text - (required) heading content (HTML markup for inside a heading tag)
 title-level - heading level (as an integer 1 to 6, default 2)
 index - slide number
 class - added CSS class(es)
+css - added custom CSS
 
 }}
-<div class="slide {{class}}" {{#index}}
+<div class="slide title-card {{class}}" {{#index}}
      data-slide-index="{{.}}"{{/index}}>
+    {{#css}}<style>
+{{{.}}}
+    </style>{{/css}}
     <h{{title-level}}{{^title-level}}2{{/title-level}}>
         {{{text}}}
     </h{{title-level}}{{^title-level}}2{{/title-level}}>

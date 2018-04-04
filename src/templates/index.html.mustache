@@ -3,31 +3,44 @@
 <head>
     <meta charset="UTF-8" />
     <title>{{page.name}} — {{site.title}}</title>
+    <link rel="stylesheet" href="../slides.css" />
 </head>
 <body>
 {{#page}}
-    <main>
-        {{{content}}}
-        <nav>
-        {{#previous}}
-            <a id="previous-slide-link" class="slide-link"
-               href="../{{slug}}/">Previous</a>
-        {{/previous}}
-        {{#next}}
-            <a id="next-slide-link" class="slide-link"
-               href="../{{slug}}/">Next</a>
-        {{/next}}
-        </nav>
-    </main>
+<main>
+    {{{content}}}
+    <nav>
+    {{#next}}
+        <a id="next-slide-link" class="slide-link"
+            data-slides-swap="+1"
+            href="../{{slug}}/">Next</a>
+    {{/next}}
+    {{#previous}}
+        <a id="previous-slide-link" class="slide-link"
+            data-slides-swap="-1"
+            href="../{{slug}}/">Previous</a>
+    {{/previous}}
+    </nav>
+</main>
 {{/page}}
 <footer>
-<nav aria-label="Jump to slide">
-<ol>
-    {{#allSlides}}
-    <li><a href="../{{slug}}/" {{#current}}aria-current="page"{{/current}}
-        >{{name}}</a></li>
-    {{/allSlides}}
-</ol>
-</nav>
+    <nav class="toggle-menu" aria-label="All slides">
+        <input id="toc-toggle" class="toggle-control" type="checkbox" style="display: none /* without CSS*/" />
+        <label id="toc-toggle-open" class="toggle-button open"
+            for="toc-toggle" style="display: none /* without CSS*/" />
+            Jump to slide…
+        </label>
+        <ol id="toc" class="popup-menu">
+            {{#allSlides}}
+            <li><a {{^current}}href="../{{slug}}/" data-slides-swap="0"
+                {{/current}}{{#current}}aria-current="page"{{/current}}
+                >{{name}}</a></li>
+            {{/allSlides}}
+        </ol>
+        <label id="toc-toggle-close" class="toggle-button close"
+            for="toc-toggle" style="display: none /* without CSS*/" />
+            <span aria-hidden="true">✖</span> Close menu
+        </label>
+    </nav>
 </footer>
 </html>
