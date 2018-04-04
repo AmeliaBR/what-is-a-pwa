@@ -1,7 +1,8 @@
 const slideDataFile = "./slides.yaml";
-//const siteDataFile = "./site.yaml";
+const siteDataFile = "./site.yaml";
 const templateFolder = "./templates/";
 const defaultTemplate = "default";
+const layoutTemplate = "index";
 const templateSuffix = ".html.mustache";
 
 const path = require("path");
@@ -12,14 +13,31 @@ const mustache = require("mustache");
 module.exports = function(src, destination, options={}) {
     let slideDataArray = [];
     let fetchTemplates = templateParser(path.resolve(src, templateFolder));
-    let siteData = {}; //yaml.safeLoad(siteDataFile);
+    let siteData, layout;
 
+// load and process the main source files (site data, slide content, layout template)
+Promise.all([
+    Promise.resolve()
+    .then(()=> {
+        siteData = yaml.safeLoad(
+            fs.readFileSync(path.resolve(src, siteDataFile), 'utf8')
+        );
+    }),
 
-    yaml.safeLoadAll(
-        fs.readFileSync(path.resolve(src, slideDataFile), 'utf8'),
-        (slide)=>{if(slide) slideDataArray.push(slide)},
-        {onWarning: console.error.bind(console) }
-    );
+    Promise.resolve()
+    .then(()=> {
+        yaml.safeLoadAll(
+            fs.readFileSync(path.resolve(src, slideDataFile), 'utf8'),
+            (slide)=>{if(slide) slideDataArray.push(slide)},
+            {onWarning: console.error.bind(console) }
+        );
+    }),
+
+    fetchTemplates(layoutTemplate)
+    .then((layoutTemplateContent)=> {
+        layout = layoutTemplateContent;
+    })
+]).then(()=>{
     slideDataArray.forEach( slugAndTitleGenerator(options.slugStyle) );
 
     slideDataArray.forEach( (d, i)=> {
@@ -43,18 +61,29 @@ module.exports = function(src, destination, options={}) {
             })
             .then( (rendered)=> {
                 let filePath = path.join(dirPath, "index.html");
+                let allSlides = slideDataArray.map(
+                    (d)=>({slug: d.slug, name: d.name})
+                );
+                allSlides[i].current = true;
                 let data = {
                     page: d,
+                    allSlides: allSlides,
+                    previous: i? allSlides[i-1] : null,
+                    next: ( (i+1) < allSlides.length)?
+                            allSlides[i+1] : null,
                     site: siteData,
                     content: rendered
                 }
-                fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+                let wrapped = mustache.render(layout, data);
+                fs.writeFileSync(filePath, wrapped);
                 return true;
             })
             .catch( (err)=> {
                 console.error(err);
             });
     });
+
+});
     
 }
 

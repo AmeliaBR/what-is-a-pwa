@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{site.lang}}{{^site.lang}}en{{/site.lang}}">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{page.name}} — {{site.title}}</title>
+</head>
+<body>
+{{#page}}
+    <main>
+        {{{content}}}
+        <nav>
+        {{#previous}}
+            <a id="previous-slide-link" class="slide-link"
+               href="../{{slug}}/">Previous</a>
+        {{/previous}}
+        {{#next}}
+            <a id="next-slide-link" class="slide-link"
+               href="../{{slug}}/">Next</a>
+        {{/next}}
+        </nav>
+    </main>
+{{/page}}
+<footer>
+<nav aria-label="Jump to slide">
+<ol>
+    {{#allSlides}}
+    <li><a href="../{{slug}}/" {{#current}}aria-current="page"{{/current}}
+        >{{name}}</a></li>
+    {{/allSlides}}
+</ol>
+</nav>
+</footer>
+</html>
