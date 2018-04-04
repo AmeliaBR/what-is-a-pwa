@@ -7,8 +7,15 @@ const templateSuffix = ".html.mustache";
 
 const path = require("path");
 const fs = require("fs");
+const {promisify} = require("util");
 const yaml = require("yaml-parser");
 const mustache = require("mustache");
+
+const fsPromisesTo = {
+    readFile: promisify(fs.readFile),
+    writeFile: promisify(fs.writeFile),
+    mkdir: promisify(fs.mkdir)
+}
 
 module.exports = function(src, destination, options={}) {
     let slideDataArray = [];
@@ -17,17 +24,15 @@ module.exports = function(src, destination, options={}) {
 
 // load and process the main source files (site data, slide content, layout template)
 Promise.all([
-    Promise.resolve()
-    .then(()=> {
-        siteData = yaml.safeLoad(
-            fs.readFileSync(path.resolve(src, siteDataFile), 'utf8')
-        );
+    fsPromisesTo.readFile(path.resolve(src, siteDataFile), 'utf8')
+    .then((dataString)=> {
+        siteData = yaml.safeLoad( dataString );
     }),
 
-    Promise.resolve()
-    .then(()=> {
+    fsPromisesTo.readFile(path.resolve(src, slideDataFile), 'utf8')
+    .then((dataString)=> {
         yaml.safeLoadAll(
-            fs.readFileSync(path.resolve(src, slideDataFile), 'utf8'),
+            dataString,
             (slide)=>{if(slide) slideDataArray.push(slide)},
             {onWarning: console.error.bind(console) }
         );
@@ -43,23 +48,26 @@ Promise.all([
     slideDataArray.forEach( (d, i)=> {
         d.index = i+1;
         let dirPath = path.join(destination, d.slug);
+        let rendered;
         fetchTemplates(d.template||defaultTemplate)
             .then((template)=> {
-                let rendered = mustache.render(template, d);
-                return rendered;
+                rendered = mustache.render(template, d);
             })
-            .then((rendered)=> {
-                if (!fs.existsSync(dirPath)) {
-                    fs.mkdirSync(dirPath);
-                }
-                return rendered;
-            })
-            .then( (rendered)=> {
-                let filePath = path.join(dirPath, "content.html");
-                fs.writeFileSync(filePath, rendered);
-                return rendered;
-            })
-            .then( (rendered)=> {
+            .then( ()=>fsPromisesTo.mkdir(dirPath) )
+            .then( ()=>true, //mkdir was successful
+                   (err)=>{
+                        if (err.code == 'EEXIST') {
+                            // it's still good!
+                            return true;
+                        }
+                        else throw err;
+                   }
+            )
+            .then( ()=> { // write the output files in parallel
+                let contentPath = path.join(dirPath, "content.html");
+                let writeContent = 
+                    fsPromisesTo.writeFile(contentPath, rendered);
+
                 let filePath = path.join(dirPath, "index.html");
                 let allSlides = slideDataArray.map(
                     (d)=>({slug: d.slug, name: d.name})
@@ -75,8 +83,10 @@ Promise.all([
                     content: rendered
                 }
                 let wrapped = mustache.render(layout, data);
-                fs.writeFileSync(filePath, wrapped);
-                return true;
+                let writeIndex =
+                    fsPromisesTo.writeFile(filePath, wrapped);
+                
+                return Promise.all([writeContent, writeIndex]);
             })
             .catch( (err)=> {
                 console.error(err);
@@ -91,19 +101,19 @@ function templateParser(templateFolder) {
     let templates = new Map();
 
     return function(name) {
-        return new Promise((resolve, reject)=>{
-            try {
-                let template = templates.get(name);
-                if (!template) {
-                    let filename = path.resolve(templateFolder, (name + templateSuffix));
-                    template = fs.readFileSync(filename, 'utf8');
-                    templates.set(name, template); // save for re-use
-                    mustache.parse( template ); // mustache stores the parsed object internally
-                }
-                resolve( template );
-            }
-            catch(err){ reject(err); }
-        });
+        let template = templates.get(name);
+        if (!template) {
+            let filename = path.resolve(templateFolder, (name + templateSuffix));
+            return fsPromisesTo.readFile(filename, 'utf8')
+                    .then((template)=>{
+                        templates.set(name, template);
+                            // save for re-use
+                        mustache.parse( template );
+                            // mustache stores the parsed object internally
+                        return template;
+                    });
+        }
+        else return Promise.resolve(template);
     }
 }
 
