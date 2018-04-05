@@ -120,7 +120,7 @@ template: list
 text: "Manifest <em>should</em> have:"
 list:
   - "<code>start_url</code>"
-  - "<code>name</code> and <code>short_name</code>"
+  - "<code>name</code> and <code>short_name</code> (max 12 char)"
   - "<code>display</code>"
   - "icons (at least one)"
 ---

@@ -1,6 +1,9 @@
 const staticFiles = [
     "slides.css",
     "slides.js",
+    "manifest.json",
+    "icon_96.png",
+    "icon_384.png",
 ];
 
 const path = require("path");
