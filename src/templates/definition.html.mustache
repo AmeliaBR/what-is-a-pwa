@@ -3,6 +3,7 @@
 Data: 
 term - (required) the term being defined (markup)
 text - (required) body of the definition (HTML markup for inside a paragraph)
+        can be a list, for multiple paragraphs
 index - slide number
 class - added CSS class(es)
 css - added custom CSS
@@ -14,7 +15,7 @@ css - added custom CSS
 {{{.}}}
     </style>{{/css}}
     <dfn>{{{term}}}</dfn>
-    <p>
-        {{{text}}}
-    </p>
+    {{#text}}<p>
+        {{{.}}}
+    </p>{{/text}}
 </div>

@@ -1,6 +1,6 @@
 
 
-/*** Page/Slide layout ***/
+/*** Page/Slide layout and colours ***/
 
 body {
     min-height: 100vh;
@@ -13,12 +13,15 @@ body {
 body, main, .slide {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+}
+.slide::after {
+    /* extra flex item to allow space after the last content item */
+    content: "";
 }
 
 main {
     position: relative;
-
-    height: calc(-6em + 100vh);
     flex: 1 0 auto;
 
     color: indigo;
@@ -33,7 +36,7 @@ main {
     border-radius: 1em;
     padding: 1em;
 
-    font-size: calc(1.5rem + 2vmin);
+    font-size: calc(1.5rem + 1vmin + 0.5vw);
 
     background: lightYellow;
     box-shadow: 0.5em 0.5em 1em 0.1em purple;
@@ -45,7 +48,7 @@ main {
     display: block;
     position: absolute;
     min-width: 4em;
-    bottom: -1.5rem;
+    bottom: -3rem;
     padding: 1rem;
     z-index: 100;
     
@@ -56,9 +59,23 @@ main {
     
     transition: opacity 0.2s;
 }
+@media (max-width: 30rem) {
+    nav.slide-links {
+        display: flex;
+        justify-content: space-between;
+    }
+    .slide-link {
+        display: inline-block;
+        padding: 0.5rem;
+        position: static;
+    }
+}
 .slide-link:link, .slide-link:visited {
     text-decoration: none;
     color: indigo;
+}
+.slide-link:focus {
+    outline-width: 2px;
 }
 
 #previous-slide-link {
@@ -79,7 +96,7 @@ main {
 }
 .popup-menu {
     width: 15rem;
-    max-width: calc(100vh - 5rem);
+    max-width: calc(100vh - 6rem);
     max-height: 90vh;
     overflow: auto;
 
@@ -175,12 +192,104 @@ main {
 
 /*** Slide Contents ***/
 
-blockquote, .slide > p {
+/* common */
+.slide.default,
+.slide.blockquote,
+.slide.title-card,
+.slide.definition p {
     text-align: center;
 }
+.slide :link {
+    color: royalBlue;
+}
+.slide :visited {
+    color: RebeccaPurple;
+}
+p {
+    margin: 1rem 0;
+}
+code {
+    background: lavender;
+}
+em {
+    font-size: 125%;
+}
+strong, b, blockquote::before, blockquote::after {
+    font-weight: bold;
+    font-size: 150%;
+    -webkit-text-stroke: hotpink 0.04em;
+    stroke: hotPink;
+    stroke-width: 0.05em;
+    text-shadow: 0.07em 0.07em skyblue;
+}
+strong {
+    display: block;
+}
 
+/* default */
+.default p {
+    line-height: calc(1.2em + 4vh);
+}
+.default strong:last-of-type,
+.definition strong:last-of-type {
+    text-align: right;
+    margin-right: 2em;
+}
+.default strong:first-of-type,
+.definition strong:first-of-type {
+    text-align: left;
+    margin-left: 2em;
+}
+
+/* code-snippet */
+pre {
+    margin: 0.5rem 0;
+    border: solid;
+}
+pre code {
+    display: block;
+    padding: 0.5em;
+    overflow: auto;
+}
+pre[data-code-lang]::before {
+    content: attr(data-code-lang);
+    display: block;
+    background: indigo;
+    color: lightYellow;
+    padding: 0 0.5em;
+}
+
+/* definition */
+dfn {
+    display: block;
+
+    font-weight: bold;
+    font-style: normal;
+    font-size: 125%;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: hotPink;
+    text-decoration-skip-ink: none;
+}
+
+/* list */
+.slide li {
+    margin: 0 0 1em 1em;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+}
+.slide ul, .slide ol {
+    padding: 0;
+    column-width: 12em;
+}
+
+/* quote */
+blockquote {
+    padding-right: 1.5em;
+}
 blockquote::before, blockquote::after {
     font-size: 300%;
+    margin: 0.1em;
 }
 
 blockquote::before {
@@ -191,6 +300,8 @@ blockquote::before {
 blockquote::after {
     content: "❞";
     float: right;
+    transform: translateY(-1.5em);
+    margin-right: -0.5em;
 }
 
 blockquote cite {
@@ -201,4 +312,24 @@ blockquote cite {
 
 blockquote cite::before {
     content: "— ";
+}
+
+/* title-card */
+h1 {
+    text-shadow: 0.05em 0.05em hotPink;
+    font-size: 250%;
+}
+h2, h3 {
+    font-size: 175%;
+    text-decoration-skip-ink: none; 
+}
+h2 {
+    text-decoration: wavy underline;
+}
+h3 {
+    text-decoration: skyBlue underline;
+}
+h3 b, h3 strong {
+    text-shadow: none;
+        /* avoid clashing with the underline */
 }

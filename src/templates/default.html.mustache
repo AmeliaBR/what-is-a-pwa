@@ -2,6 +2,7 @@
 
 Data: 
 text -  (required) slide content (HTML markup for inside a paragraph)
+        can be a list, for multiple paragraphs
 index - slide number
 class - added CSS class(es)
 css - added custom CSS
@@ -12,7 +13,7 @@ css - added custom CSS
     {{#css}}<style>
 {{{.}}}
     </style>{{/css}}
-    <p>
-        {{{text}}}
-    </p>
+    {{#text}}<p>
+        {{{.}}}
+    </p>{{/text}}
 </div>

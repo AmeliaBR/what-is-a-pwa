@@ -9,7 +9,7 @@
 {{#page}}
 <main>
     {{{content}}}
-    <nav>
+    <nav class="slide-links">
     {{#next}}
         <a id="next-slide-link" class="slide-link"
             data-slides-swap="+1"
@@ -33,8 +33,8 @@
         <ol id="toc" class="popup-menu">
             {{#allSlides}}
             <li><a {{^current}}href="../{{slug}}/" data-slides-swap="0"
-                {{/current}}{{#current}}aria-current="page"{{/current}}
-                >{{name}}</a></li>
+                {{/current}}{{#current}}aria-current="page"
+                {{/current}}>{{name}}</a></li>
             {{/allSlides}}
         </ol>
         <label id="toc-toggle-close" class="toggle-button close"
@@ -43,4 +43,6 @@
         </label>
     </nav>
 </footer>
+<script src="../slides.js"></script>
+</body>
 </html>

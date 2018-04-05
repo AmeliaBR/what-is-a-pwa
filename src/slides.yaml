@@ -14,8 +14,16 @@ name: Introduction
 template: title-card
 title-level: 1
 text: "What the
-  <span role='img' aria-label='H-E-double-hockey-sticks'>HE🏒🏒</span>
-  is a PWA?"
+  <span role='img' aria-label='H-E-double-hockey-sticks'
+  >HE<span class='hockey-sticks'>🏒🏒</span></span><br/>
+  is a<br/> PWA?"
+css: |-
+  .hockey-sticks {
+      display: inline-block;
+      letter-spacing: -0.7em;
+      margin: 0 0.5em;
+      transform: scaleX(-1);
+  }
 ---
 name: P.W.A.
 text: "<b>P</b>rogressive
@@ -23,7 +31,7 @@ text: "<b>P</b>rogressive
   <b>A</b>pplication"
 ---
 name: It's a website
-text: "A <strong>website</strong>
+text: "<strong>A website</strong>
   that has been <em>progressively enhanced</em>
   so it acts like an <strong>app</strong>"
 ---
@@ -53,17 +61,20 @@ name: Website plus
 template: title-card
 title-level: 3
 text: "A progressive website
-  <b>+</b> installation metadata
-  <b>+</b> offline support"
+  <div><b>+</b></div> installation metadata
+  <div><b>+</b></div> offline support"
+css: |-
+  h3 b { text-decoration: lightYellow underline; }
 ---
 name: Basic or better
 template: definition
-term: "progressive"
-text: "Basic functionality in basic browsers.<br/>
-  Better functionality in better browsers."
+term: "progressive (enhancement)"
+text: 
+  - "Basic functionality in basic browsers."
+  - "Better functionality in better browsers."
 ---
 name: Progressive means responsive
-text: "<em>progressive</em> also means <strong>responsive</strong>"
+text: "<strong>progressive</strong> also means <strong>responsive</strong>"
 ---
 name: It's still a website
 template: definition
@@ -71,17 +82,17 @@ term: "website"
 text: "<em>discoverable</em>, <em>linkable</em>, <strong>OS-independent</strong>"
 ---
 name: HTTPS required
-text: "Also <em>secure</em>: HTTPS is <strong>required</strong>"
+text: "Also <em>secure</em>:<br/> HTTPS is <strong>required</strong>"
 ---
 name: Installation metadata
 template: definition
 term: "installation metadata"
-text: "A web <em>manifest</em> (JSON) file defines the <em>app-y</em> bits"
+text: "A web <em>manifest</em> (JSON file) defines the <em>app-y</em> bits"
 ---
 name: Offline support
 template: definition
 term: "offline support"
-text: "A <em>service worker</em> (JS) file provides offline support."
+text: "A <em>service worker</em> (JavaScript) provides offline support."
 ---
 name: The manifest
 template: title-card
@@ -93,9 +104,7 @@ template: code-snippet
 text: "Linked from every page"
 code: 
   - lang: HTML
-    code: '<link rel="manifest" href="/manifest.webmanifest" />'
-  - lang: HTML
-    code: '<link rel="manifest" href="/manifest.json" />'
+    code: '<link rel="manifest" href="/en.webmanifest" />'
   - lang: HTML
     code: '<link rel="manifest" href="/manifest-en.json" />'
 ---
@@ -118,8 +127,8 @@ list:
   - "more icons and theme colors"
   - "screenshots, categories, and ratings for app stores"
   - "<code>orientation</code>"
-  - "alternative apps"
-  - "<code>serviceworker</code>"
+  - "alternative apps and <code>prefer_related_applications</code> (boo)"
+  - "<code>serviceworker</code> (eventually, maybe)"
 ---
 name: installation support
 template: list
@@ -128,7 +137,7 @@ list:
   - "Android browsers (Chrome, Firefox, etc.)"
   - "Safari 11.1 (brand new)"
   - "MS Edge 17 / Windows Store (in preview)"
-  - "Soon: Other browsers on Windows & iOS"
+  - "Soon: Other browsers on Windows, Mac & iOS"
 ---
 name: The service worker
 template: title-card
@@ -138,24 +147,27 @@ text: "Service Worker"
 name: Web workers
 template: definition
 term: "worker (script)"
-text: "script that runs in its own global <em>scope</em>,
-  separate from the document window"
+text: 
+  - "script that runs in its own global <em>scope</em>,
+     separate from the document window"
+  - "may run on a separate <strong>thread</strong>"
 ---
 name: Proxy as a service
-text: "The <em>Service</em> worker acts as a <em>proxy</em> for website fetches"
+text: "The <em>Service</em> worker acts as a <strong>proxy server</strong> for website file fetches"
 ---
 name: Custom cache
-text: "A service worker controls a <em>cache</em> of HTTP requests &amp; responses"
+text: "A service worker controls a <strong>cache</strong> of HTTP requests &amp; responses
+       for its entire <strong>scope</strong>"
 ---
 name: Only one
 text: "There can be only <strong>one</strong>"
 ---
 name: Simple offline support
-text: "<strong>Minimum Viable Service Worker:</strong> custom error pages"
+text: "<strong>Minimum Viable Service Worker:</strong> custom offline error pages"
 ---
 name: Possible service workers
 template: list
-text: "Maximal Service Workers:"
+text: "<strong>Maximal</strong> Service Workers:"
 list: 
   - "standalone games/apps"
   - "save for offline"
@@ -165,12 +177,12 @@ list:
 ---
 name: Service worker registration
 template: code-snippet
-text: "Registered with JS on any page:"
+text: "Registered with JS on any (every) page:"
 code: 
       lang: JS
       code: |-
         if (navigator.serviceWorker) {
-            navigator.serviceWorker.register("/sw.js")
+          navigator.serviceWorker.register("/sw.js")
         }
 ---
 name: The demo
@@ -179,10 +191,10 @@ level: 2
 text: "A demo"
 ---
 name: This is the demo
-text: "You're looking at it"
+text: "<b>You're looking at it</b>"
 css: |-
   .slide p {
-    animation: pulse 2s infinite alternate;
+    animation: pulse 1s ease-in-out infinite alternate;
   }
   @keyframes pulse {
     to { transform: scale(1.1); }
@@ -203,7 +215,7 @@ title-level: 2
 text: "More PWA resources"
 ---
 name: PWA Rock
-text: "The <a href='https://pwa.rocks/'>PWA Rocks</a> site compiles demos &amp; real-world sites"
+text: "The <a href='https://pwa.rocks/'><b>PWA Rocks</b></a> site compiles demos &amp; real-world sites"
 object:
   iframe: 'https://pwa.rocks/'
 ---
@@ -217,9 +229,9 @@ list:
      has tutorials"
   - "The Service Worker Cookbook, <a href='https://serviceworke.rs/'>serviceworke.rs</a>
      has copy & paste samples"
-  - "Then, there's the
+  - "Then, there's the specs:
      <a href='https://w3c.github.io/ServiceWorker/'>Service Worker</a> and
-     <a href='https://w3c.github.io/manifest/'>Web Manifest</a> specs
+     <a href='https://w3c.github.io/manifest/'>Web Manifest</a>,
      on w3c.github.io"
 ---
 

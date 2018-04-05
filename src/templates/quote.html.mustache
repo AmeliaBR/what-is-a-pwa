@@ -2,6 +2,7 @@
 
 Data: 
 text - (required) body of the quote (HTML markup)
+        can be a list, for multiple paragraphs
 citation - source of the quote, either as a string or a {source, link} object
 index - slide number
 class - added CSS class(es)
@@ -14,7 +15,9 @@ css - added custom CSS
 {{{.}}}
     </style>{{/css}}
     <blockquote>
-        {{{text}}}
+        {{#text}}<p>
+        {{{.}}}
+        </p>{{/text}}
         {{#citation}}<cite>
             {{#link}}<a href="{{{.}}}">{{/link}}
             {{{source}}}{{^source}}{{{.}}}{{/source}}
