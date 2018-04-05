@@ -27,10 +27,10 @@ css: |-
 ---
 name: Talk details
 text:
-  - What (the Heck) is a PWA?
-  - talk by Amelia Bellamy-Royds</br> (<a href="https://twitter.com/AmeliasBrain">@AmeliasBrain</a>)
-  - 5 April 2018, Exchange.js,<br/> Edmonton
-  - "<a href='https://ameliabr.github.io/what-is-a-pwa/'>View on GitHub pages</a>"
+  - "<strong style='text-align: center; margin: 0;'>What (the Heck) is a PWA?</strong>"
+  - A talk by Amelia Bellamy-Royds</br> (<a href="https://twitter.com/AmeliasBrain">@AmeliasBrain</a>)
+  - 5 April 2018, Exchange.js<br/> Edmonton
+  - "<a href='https://ameliabr.github.io/what-is-a-pwa/'>ameliabr.github.io/what-is-a-pwa/</a>"
 ---
 name: P.W.A.
 text: "<b>P</b>rogressive
