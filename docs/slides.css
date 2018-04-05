@@ -1,0 +1,368 @@
+
+
+/*** Page/Slide layout and colours ***/
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background: skyBlue;
+    font-family: sans-serif;
+}
+
+body, main, .slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.slide::after {
+    /* extra flex item to allow space after the last content item */
+    content: "";
+}
+
+main {
+    position: relative;
+    flex: 1 0 auto;
+
+    color: indigo;
+}
+
+.slide {
+    position: relative;
+    flex-grow: 1;
+    left: -0.2em;
+    margin: 1em;
+
+    border-radius: 1em;
+    padding: 1em;
+
+    font-size: calc(1.5rem + 1vmin + 0.5vw);
+
+    background: lightYellow;
+    box-shadow: 0.5em 0.5em 1em 0.1em purple;
+}
+
+/*** Error banner ***/
+#error:empty { display: none; }
+#error {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    padding: 0.5rem;
+
+    border: darkRed solid;
+    background: indianRed;
+    color: yellow;
+    text-shadow: 0.1em 0.1em 0.1em black;
+
+    z-index: 200;
+}
+#error p {
+    margin: 0.5rem 0;
+}
+#error .close-button {
+    float: right;
+    padding: 0.5rem;
+
+    background: lightYellow;
+    border-color: yellow;
+    color: darkRed;
+}
+
+/*** Next/Previous Navigation ***/
+
+.slide-link {
+    display: block;
+    position: absolute;
+    min-width: 4em;
+    bottom: -3rem;
+    padding: 1rem;
+    z-index: 100;
+    
+    font-size: 200%;
+    text-align: center;
+
+    background: hotPink;
+    
+    transition: opacity 0.2s;
+}
+@media (max-width: 30rem) {
+    nav.slide-links {
+        display: flex;
+        justify-content: space-between;
+    }
+    .slide-link {
+        display: inline-block;
+        padding: 0.5rem;
+        position: static;
+    }
+}
+.slide-link:link, .slide-link:visited {
+    color: indigo;
+}
+.slide-link:focus {
+    outline: deepSkyBlue 2px solid;
+}
+.slide-link:link {
+    text-decoration: none;
+}
+
+#previous-slide-link {
+    left: 0.5rem;
+}
+
+#next-slide-link {
+    right: 0.5rem;
+}
+
+.slide-link:not(:focus):not(:hover) {
+    opacity: 0.5;
+}
+
+/*** Popup table of contents navigation ***/
+.toggle-menu {
+    height: 4rem;
+}
+.popup-menu {
+    width: 15rem;
+    max-width: calc(100vh - 6rem);
+    max-height: 90vh;
+    overflow: auto;
+
+    padding-right: 0.5rem;
+
+    background: #234;
+    color: white;
+}
+.toggle-control, .toggle-button {
+    display: block !important; /* override inline style */
+}
+.toggle-control:checked ~ .popup-menu,
+.toggle-control:not(:checked) ~ .popup-menu {
+    position: absolute;
+
+    margin: auto;
+    bottom: 4rem;
+    left: 0;
+    right: 0;
+}
+.toggle-control:not(:checked) ~ .popup-menu {
+    visibility:hidden;
+}
+.toggle-control {
+    position: absolute;
+    clip: rect(0,0,0,0);
+}
+.toggle-control:focus ~ .toggle-button {
+    outline: dashed 2px hotPink;
+    outline-offset: -0.5rem;
+}
+.toggle-button {
+    position: absolute;
+    width: 8em;
+    margin: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    padding: 1rem;
+
+    text-align: center;
+
+    background: #234;
+    color: lightSkyBlue;
+    border-color: #468;
+}
+@supports (width: fit-content) {
+    .toggle-button {
+        bottom: 0.2rem;
+        width: fit-content;
+        min-width: 5em;
+    }
+}
+.toggle-button.open {
+    border-style: outset;
+}
+.toggle-button.close {
+    border-style: inset;
+}
+.toggle-control:checked ~ .toggle-button.open {
+    visibility: hidden;
+}
+.toggle-control:not(:checked) ~ .toggle-button.close {
+    visibility: hidden;
+}
+
+.popup-menu li {
+    margin: 0.5em 0;
+}
+.popup-menu a:link {
+    color: deepSkyBlue;
+}
+.popup-menu a:visited, .popup-menu a:not(:link) {
+    color: lightSkyBlue;
+}
+.popup-menu a[aria-current]::before {
+    content: "➣";
+
+    display: inline-block;
+    vertical-align: -0.1em;
+
+    font-size: 150%;
+}
+@supports (transform: scaleX(-1)) {
+    .popup-menu a[aria-current]::before {
+        float: right;
+        margin-top: -0.3em;
+        transform: scaleX(-1);
+    }
+}
+
+
+/*** Slide Contents ***/
+
+/* common */
+.slide.default,
+.slide.blockquote,
+.slide.title-card,
+.slide.definition p {
+    text-align: center;
+}
+.slide :link {
+    color: royalBlue;
+}
+.slide :visited {
+    color: RebeccaPurple;
+}
+p {
+    margin: 1rem 0;
+}
+code {
+    background: lavender;
+}
+em {
+    font-size: 125%;
+}
+strong, b, blockquote::before, blockquote::after {
+    font-weight: bold;
+    font-size: 150%;
+    -webkit-text-stroke: hotpink 0.04em;
+    stroke: hotPink;
+    stroke-width: 0.05em;
+    text-shadow: 0.07em 0.07em skyblue;
+}
+strong {
+    display: block;
+}
+
+/* default */
+.default p {
+    line-height: calc(1.2em + 4vh);
+}
+.default :first-of-type strong:first-of-type,
+.definition :first-of-type strong:first-of-type {
+    text-align: left;
+    margin-left: 2em;
+}
+.default :last-of-type strong:last-of-type,
+.definition :last-of-type strong:last-of-type {
+    text-align: right;
+    margin-right: 2em;
+}
+
+/* code-snippet */
+pre {
+    margin: 0.5rem 0;
+    border: solid;
+}
+pre code {
+    display: block;
+    padding: 0.5em;
+    overflow: auto;
+}
+pre[data-code-lang]::before {
+    content: attr(data-code-lang);
+    display: block;
+    background: indigo;
+    color: lightYellow;
+    padding: 0 0.5em;
+}
+
+/* definition */
+dfn {
+    display: block;
+
+    font-weight: bold;
+    font-style: normal;
+    font-size: 125%;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: hotPink;
+    text-decoration-skip-ink: none;
+}
+
+/* list */
+.slide li {
+    margin: 0 0 1em 1em;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+}
+.slide ul, .slide ol {
+    padding: 0;
+    column-width: 12em;
+}
+
+/* quote */
+blockquote {
+    padding-right: 1.5em;
+}
+blockquote::before, blockquote::after {
+    font-size: 300%;
+    margin: 0.1em;
+}
+
+blockquote::before {
+    content: "❝";
+    float: left;
+}
+
+blockquote::after {
+    content: "❞";
+    float: right;
+    transform: translateY(-1.5em);
+    margin-right: -0.5em;
+}
+
+blockquote cite {
+    display: block;
+    margin-top: 0.5em;
+    text-align: right;
+}
+
+blockquote cite::before {
+    content: "— ";
+}
+
+/* title-card */
+h1 {
+    font-size: 250%;
+    text-shadow: 0.05em 0.05em hotPink;
+    -webkit-text-stroke: skyBlue 0.02em;
+    stroke: skyBlue;
+    stroke-width: 0.02em;
+}
+h2, h3 {
+    font-size: 175%;
+    text-decoration-skip-ink: none; 
+}
+h2 {
+    text-decoration: wavy underline;
+}
+h3 {
+    text-decoration: skyBlue underline;
+}
+h3 b, h3 strong {
+    text-shadow: none;
+        /* avoid clashing with the underline */
+}

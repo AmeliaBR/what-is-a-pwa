@@ -1,0 +1,17 @@
+<div class="slide code-snippet " 
+     data-slide-name="Claim your clients!"
+     data-slide-index="38">
+    
+    <p>
+        But… that only affects <em>new</em> tabs (or refreshes).
+    </p>
+    <p>
+        You need to <em>claim</em> existing tabs separately.
+    </p>
+    <pre data-code-lang="JS"><code>self.addEventListener(&#39;install&#39;, (e)&#x3D;&gt; {
+  &#x2F;* ...do stuff to get ready... *&#x2F;
+
+  self.skipWaiting(); &#x2F;&#x2F; &lt;&#x3D; get new tabs
+  clients.claim(); &#x2F;&#x2F; &lt;&#x3D; + existing tabs
+});</code></pre>
+</div>

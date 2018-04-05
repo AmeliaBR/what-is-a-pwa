@@ -1,0 +1,25 @@
+{
+    "lang": "en",
+    "name": "What the Heck is a PWA? Slides and Demo",
+    "short_name": "What's a PWA",
+    "scope": "/what-is-a-pwa/",
+    "start_url": "/title-page/",
+
+    "description": "Slides for an introduction to Progressive Web Apps (PWA), which are themselves a PWA demo.",
+    "icons": [
+        {
+            "src":   "icon.png",
+            "sizes": "384x384",
+            "type":  "image/png"
+        },
+        {
+            "src":   "icon_96.png",
+            "sizes": "96x96",
+            "type":  "image/png"
+        }
+    ],
+    "theme_color": "indigo",
+    "background_color": "skyBlue",
+    "display": "fullscreen"
+
+}

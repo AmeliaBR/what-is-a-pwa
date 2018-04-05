@@ -1,0 +1,13 @@
+<div class="slide code-snippet " 
+     data-slide-name="Skip waiting and start fetching now!"
+     data-slide-index="37">
+    
+    <p>
+        A waiting service worker can skip waiting and force early <strong>activation</strong>
+    </p>
+    <pre data-code-lang="JS"><code>self.addEventListener(&#39;install&#39;, (e)&#x3D;&gt; {
+  &#x2F;* ...do stuff to get ready... *&#x2F;
+
+  self.skipWaiting();
+});</code></pre>
+</div>
