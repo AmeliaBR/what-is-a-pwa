@@ -8,13 +8,13 @@
     "description": "Slides for an introduction to Progressive Web Apps (PWA), which are themselves a PWA demo.",
     "icons": [
         {
-            "src":   "icon.png",
-            "sizes": "384x384",
+            "src":   "icon_96.png",
+            "sizes": "96x96",
             "type":  "image/png"
         },
         {
-            "src":   "icon_96.png",
-            "sizes": "96x96",
+            "src":   "icon_384.png",
+            "sizes": "384x384",
             "type":  "image/png"
         }
     ],

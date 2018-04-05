@@ -1,4 +1,5 @@
 const staticFiles = [
+    "index.html", // top-level index page
     "slides.css",
     "slides.js",
     "manifest.json",
