@@ -1,6 +1,7 @@
 # Site-wide metadata for the generated slides
 ---
 title: "What is a PWA (Progressive Web App)?"
+lang: en
 scope: "/what-is-a-pwa"
 #scope: "" # for local dev
 ...

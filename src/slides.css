@@ -99,11 +99,13 @@ main {
     }
 }
 .slide-link:link, .slide-link:visited {
-    text-decoration: none;
     color: indigo;
 }
 .slide-link:focus {
-    outline-width: 2px;
+    outline: deepSkyBlue 2px solid;
+}
+.slide-link:link {
+    text-decoration: none;
 }
 
 #previous-slide-link {
@@ -258,15 +260,15 @@ strong {
 .default p {
     line-height: calc(1.2em + 4vh);
 }
-.default strong:last-of-type,
-.definition strong:last-of-type {
-    text-align: right;
-    margin-right: 2em;
-}
-.default strong:first-of-type,
-.definition strong:first-of-type {
+.default :first-of-type strong:first-of-type,
+.definition :first-of-type strong:first-of-type {
     text-align: left;
     margin-left: 2em;
+}
+.default :last-of-type strong:last-of-type,
+.definition :last-of-type strong:last-of-type {
+    text-align: right;
+    margin-right: 2em;
 }
 
 /* code-snippet */
@@ -344,8 +346,11 @@ blockquote cite::before {
 
 /* title-card */
 h1 {
-    text-shadow: 0.05em 0.05em hotPink;
     font-size: 250%;
+    text-shadow: 0.05em 0.05em hotPink;
+    -webkit-text-stroke: skyBlue 0.02em;
+    stroke: skyBlue;
+    stroke-width: 0.02em;
 }
 h2, h3 {
     font-size: 175%;

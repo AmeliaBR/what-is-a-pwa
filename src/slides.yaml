@@ -10,7 +10,7 @@
 # class    - CSS classes to add to the slide element
 # ...other values according to the template
 ---
-name: Introduction
+name: Title page
 template: title-card
 title-level: 1
 text: "What the
@@ -24,6 +24,13 @@ css: |-
       margin: 0 0.5em;
       transform: scaleX(-1);
   }
+---
+name: Talk details
+text:
+  - What (the Heck) is a PWA?
+  - talk by Amelia Bellamy-Royds</br> (<a href="https://twitter.com/AmeliasBrain">@AmeliasBrain</a>)
+  - 5 April 2018, Exchange.js,<br/> Edmonton
+  - "<a href='https://ameliabr.github.io/what-is-a-pwa/'>View on GitHub pages</a>"
 ---
 name: P.W.A.
 text: "<b>P</b>rogressive
@@ -142,7 +149,7 @@ list:
 name: The service worker
 template: title-card
 level: 3
-text: "Service Worker"
+text: "Service Workers"
 ---
 name: Web workers
 template: definition
@@ -153,14 +160,26 @@ text:
   - "may run on a separate <strong>thread</strong>"
 ---
 name: Proxy as a service
-text: "The <em>Service</em> worker acts as a <strong>proxy server</strong> for website file fetches"
+text: "The <em>service</em> worker acts as a <strong>proxy server</strong> for website file fetches"
 ---
 name: Custom cache
 text: "A service worker controls a <strong>cache</strong> of HTTP requests &amp; responses
        for its entire <strong>scope</strong>"
 ---
-name: Only one
-text: "There can be only <strong>one</strong>"
+name: Service worker registration
+template: code-snippet
+text: "Registered with JS on any (every) page:"
+code: 
+      lang: JS
+      code: |-
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.register("/sw.js")
+        }
+---
+name: Service Worker Benefits
+template: title-card
+title-level: 3
+text: Why use service workers?
 ---
 name: Simple offline support
 text: "<strong>Minimum Viable Service Worker:</strong> custom offline error pages"
@@ -175,46 +194,138 @@ list:
   - "generated HTML"
   - "multi-tab communication"
 ---
-name: Service worker registration
-template: code-snippet
-text: "Registered with JS on any (every) page:"
-code: 
-      lang: JS
-      code: |-
-        if (navigator.serviceWorker) {
-          navigator.serviceWorker.register("/sw.js")
-        }
----
-name: The demo
+name: Service Worker Complications
 template: title-card
-level: 2
-text: "A demo"
+title-level: 3
+text: Problems with service workers
 ---
-name: This is the demo
-text: "<b>You're looking at it</b>"
-css: |-
-  .slide p {
-    animation: pulse 1s ease-in-out infinite alternate;
-  }
-  @keyframes pulse {
-    to { transform: scale(1.1); }
-  }
+name: Cache invalidation
+template: definition
+term: cache invalidation
+text:
+  - knowing when to trash your cache
+  - considered one of the <strong>hard problems</strong> of computer science
 ---
-name: Demo links
+name: How do you know?
+text:
+  - If you're using cached versions of files…
+  - …how do you know when a file has been <em>updated</em> on the server?
+---
+name: Updating the service worker
+text:
+  - The <em>browser</em> will regularly check to see if the <strong>worker script</strong>
+    needs an update.
+  - If the script has changed at all, the new script will be <strong>installed</strong>
+    and can modify the cache.
+---
+name: Version your worker
 template: list
-text: "Follow along:"
+text: "In other words:"
 list:
-  - "<a href='https://github.com/AmeliaBR/what-is-a-pwa/'>GitHub repo: AmeliaBR/what-is-a-pwa</a>"
-  - "<a href='https://ameliabr.github.io/what-is-a-pwa/'>Live on GitHub pages</a>" 
+  - "update your worker whenever you update your site"
+  - "include a version number <code>const</code> in the worker file"
+  - "include code for detecting & discarding stale cache items"
+css: |-
+  .slide ul { column-width: auto; }
 ---
-###
-#---
+name: Only one
+text: "<strong>But…</strong> There can be only <strong>one</strong>"
+---
+name: Storage conflicts
+template: quote
+text:
+  - If you're dealing with storage you can easily end up with 2 tabs
+    having very different opinions on how their shared storage should be managed.
+  - This can result in errors, or worse, data loss.
+citation:
+  source: Jake Archibald
+  link: 'https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle'
+---
+name: It causes them great sadness
+template: quote
+text:
+  - Users actively dislike data loss.
+  - It causes them great sadness.
+citation:
+  source: Jake Archibald
+  link: 'https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle'
+css: |-
+  blockquote p:last-of-type {
+    text-align: right;
+  }
+---
+name: The worker-in-waiting
+text:
+    By default, the new service worker <strong>waits</strong>
+    until <em>all</em> tabs using the old worker have <strong>closed</strong>.
+---
+name: Skip waiting and start fetching now!
+template: code-snippet
+text:
+    A waiting service worker can skip waiting
+    and force early <strong>activation</strong>
+code:
+    lang: JS
+    code: |-
+      self.addEventListener('install', (e)=> {
+        /* ...do stuff to get ready... */
+
+        self.skipWaiting();
+      });
+---
+name: Claim your clients!
+template: code-snippet
+text:
+  - But… that only affects <em>new</em> tabs (or refreshes).
+  - You need to <em>claim</em> existing tabs separately.
+code:
+    lang: JS
+    code: |-
+      self.addEventListener('install', (e)=> {
+        /* ...do stuff to get ready... */
+
+        self.skipWaiting(); // <= get new tabs
+        clients.claim(); // <= + existing tabs
+      });
+---
+name: Or… don't
+text:
+  - <strong>Or… don't.</strong>
+  - You can wait out the activation period,<br/>
+    just setting up the service worker <strong>for next time</strong>.
+  - Or, <em>document code</em> can listen for service worker changes
+    and update <strong>when it is safe</strong>.
+---
+# name: The demo
+# template: title-card
+# level: 2
+# text: "A demo"
+# ---
+# name: This is the demo
+# text: "<b>You're looking at it</b>"
+# css: |-
+#   .slide p {
+#     animation: pulse 1s ease-in-out infinite alternate;
+#   }
+#   @keyframes pulse {
+#     to { transform: scale(1.1); }
+#   }
+# ---
+# name: Demo links
+# template: list
+# text: "Follow along:"
+# list:
+#   - "<a href='https://github.com/AmeliaBR/what-is-a-pwa/'>GitHub repo: AmeliaBR/what-is-a-pwa</a>"
+#   - "<a href='https://ameliabr.github.io/what-is-a-pwa/'>Live on GitHub pages</a>" 
+# ---
+#
+# ---
 name: More to explore
 template: title-card
 title-level: 2
 text: "More PWA resources"
 ---
-name: PWA Rock
+name: PWA Rocks
 text: "The <a href='https://pwa.rocks/'><b>PWA Rocks</b></a> site compiles demos &amp; real-world sites"
 object:
   iframe: 'https://pwa.rocks/'
@@ -233,6 +344,18 @@ list:
      <a href='https://w3c.github.io/ServiceWorker/'>Service Worker</a> and
      <a href='https://w3c.github.io/manifest/'>Web Manifest</a>,
      on w3c.github.io"
+---
+name: Lighthouse analysis tool
+text: 
+    Google's <a href='https://developers.google.com/web/tools/lighthouse/'><b>Lighthouse</b></a>
+    analysis tool<br/> (in Chrome Dev Tools Audits)<br/> includes PWA tests.
+---
+name: Don't forget Dev Tools
+text: 
+  - There are other new service worker and PWA Dev Tools features
+    <strong>(in all browsers)</strong>
+  - Expect more as support improves,
+    so you can <strong>start coding!</strong>
 ---
 
 
