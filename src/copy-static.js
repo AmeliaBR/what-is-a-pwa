@@ -1,5 +1,6 @@
 const staticFiles = [
-    "slides.css"
+    "slides.css",
+    "slides.js",
 ];
 
 const path = require("path");
