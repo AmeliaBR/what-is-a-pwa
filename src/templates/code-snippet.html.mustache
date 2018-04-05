@@ -1,6 +1,7 @@
 {{!
 
 Data: 
+name - title for the slide/page
 text - description of the code (HTML markup)
 code - (required) an object or list of objects of the form {code, lang}, or a string
      - the code will be escaped, NOT treated as markup
@@ -11,6 +12,7 @@ css - added custom CSS
 
 }}
 <div class="slide code-snippet {{class}}" {{#index}}
+     data-slide-name="{{name}}"
      data-slide-index="{{.}}"{{/index}}>
     {{#css}}<style>
 {{{.}}}

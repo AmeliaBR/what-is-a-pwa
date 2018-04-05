@@ -1,6 +1,7 @@
 {{!
 
 Data: 
+name - title for the slide/page
 text - (required) heading content (HTML markup for inside a heading tag)
 title-level - heading level (as an integer 1 to 6, default 2)
 index - slide number
@@ -9,6 +10,7 @@ css - added custom CSS
 
 }}
 <div class="slide title-card {{class}}" {{#index}}
+     data-slide-name="{{name}}"
      data-slide-index="{{.}}"{{/index}}>
     {{#css}}<style>
 {{{.}}}

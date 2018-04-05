@@ -1,6 +1,7 @@
 {{!
 
 Data: 
+name - title for the slide/page
 text - description/introductory phrase (HTML markup)
 list - (required) a list of HTML markup strings
 ordered - true if this should be an ordered list
@@ -10,6 +11,7 @@ css - added custom CSS
 
 }}
 <div class="slide list {{class}}" {{#index}}
+     data-slide-name="{{name}}"
      data-slide-index="{{.}}"{{/index}}>
     {{#css}}<style>
 {{{.}}}

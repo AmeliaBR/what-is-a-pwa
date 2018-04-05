@@ -1,6 +1,7 @@
 {{!
 
 Data: 
+name - title for the slide/page
 text - (required) body of the quote (HTML markup)
         can be a list, for multiple paragraphs
 citation - source of the quote, either as a string or a {source, link} object
@@ -10,6 +11,7 @@ css - added custom CSS
 
 }}
 <div class="slide quote {{class}}" {{#index}}
+     data-slide-name="{{name}}"
      data-slide-index="{{.}}"{{/index}}>
     {{#css}}<style>
 {{{.}}}

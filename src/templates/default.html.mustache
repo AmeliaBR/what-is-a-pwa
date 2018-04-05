@@ -1,6 +1,7 @@
 {{!
 
 Data: 
+name - title for the slide/page
 text -  (required) slide content (HTML markup for inside a paragraph)
         can be a list, for multiple paragraphs
 index - slide number
@@ -9,6 +10,7 @@ css - added custom CSS
 
 }}
 <div class="slide default {{class}}" {{#index}}
+     data-slide-name="{{name}}"
      data-slide-index="{{.}}"{{/index}}>
     {{#css}}<style>
 {{{.}}}

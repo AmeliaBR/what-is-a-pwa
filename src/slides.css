@@ -42,6 +42,34 @@ main {
     box-shadow: 0.5em 0.5em 1em 0.1em purple;
 }
 
+/*** Error banner ***/
+#error:empty { display: none; }
+#error {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    padding: 0.5rem;
+
+    border: darkRed solid;
+    background: indianRed;
+    color: yellow;
+    text-shadow: 0.1em 0.1em 0.1em black;
+
+    z-index: 200;
+}
+#error p {
+    margin: 0.5rem 0;
+}
+#error .close-button {
+    float: right;
+    padding: 0.5rem;
+
+    background: lightYellow;
+    border-color: yellow;
+    color: darkRed;
+}
+
 /*** Next/Previous Navigation ***/
 
 .slide-link {
